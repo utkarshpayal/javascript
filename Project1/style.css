@@ -1,10 +1,34 @@
-html {
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav {
+    background-color: #91ae20; 
+    color: rgb(237, 33, 33); 
+    padding: 10px;
+    text-align: center;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: rgb(255, 255, 255); 
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  html {
     margin: 0;
   }
   
   span {
     display: block;
   }
+  
   .canvas {
     margin: 100px auto 100px;
     width: 80%;
@@ -25,12 +49,15 @@ html {
   #white {
     background: white;
   }
+  
   #blue {
     background: blue;
   }
+  
   #yellow {
     background: yellow;
   }
+  
   #pink {
     background: pink;
   }
