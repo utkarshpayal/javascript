@@ -1,7 +1,7 @@
 // object literals
 //Object.create()
 
-const mySym = Symbol("key1");
+// const mySym = Symbol("key1");
 // console.log(typeof mySym)
 const jsUser = {
     Name: "Utkarsh",
@@ -26,14 +26,17 @@ const jsUser2 = {
 // jsUser.Email = "utk@gmail.com"
 // console.log(jsUser)
 
-jsUser.greeting = function(){
-    console.log("Hello bhai")
-}
-console.log(jsUser.greeting())
+// jsUser.greeting = function(){
+//     console.log("Hello bhai")
+// }
+// console.log(jsUser.greeting())
 
-jsUser.greetingTwo = function(){
-    console.log(`Hello bhai, ${this.Name}`)
+// jsUser.greetingTwo = function(){
+//     console.log(`Hello bhai, ${this.Name}`)
 
-    console.log(`Hello bhai, ${jsUser2.Name}`)
-}
-console.log(jsUser.greetingTwo())
+//     console.log(`Hello bhai, ${jsUser2.Name}`)
+// }
+// console.log(jsUser.greetingTwo())
+
+
+
