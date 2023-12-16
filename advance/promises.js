@@ -95,8 +95,8 @@ consumePromiseFive()
 // }
 
 // getAllUsers()
-
-fetch('https://api.github.com/users/utkarshpayal')
+let name = "manjeet-agarwal"
+fetch(`https://api.github.com/users/${name}`)
 .then((response)=>{
     return response.json()
 })
