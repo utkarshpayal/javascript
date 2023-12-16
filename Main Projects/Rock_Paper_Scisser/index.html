@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Set the character set and viewport for responsive design -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock, Paper & Scissor</title>
+    <!-- Set the title of the HTML document -->
+    <title>Rock, Paper & Scissors</title>
+    <!-- Add styles for the game -->
     <style>
+        /* Reset some default styles and set the font family */
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
         }
 
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
+       /* Base styling for navigation items */
+nav {
+    background-color: #333;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between; /* Distribute items with equal space between them */
+}
 
-        nav a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 20px 40px;
-            text-decoration: none;
-        }
-
-        /* Style the links on hover */
+nav a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 20px 40px;
+    text-decoration: none;
+    font-weight: bold;
+}
         nav a:hover {
             background-color: #ddd;
             color: black;
@@ -36,7 +42,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Ensure the container covers the entire viewport height */
+            min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
         }
@@ -51,56 +57,37 @@
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center; /* Center the content vertically inside the big box */
-            text-align: center; /* Center the content horizontally inside the big box */
-            transition: box-shadow 0.5s ease-in-out; /* Add a smooth transition for the box shadow */
+            align-items: center;
+            text-align: center;
+            transition: box-shadow 0.5s ease-in-out;
+            flex-wrap: wrap;
         }
 
-        /* Styling for the big box */
-.big-box {
-    border: 6px solid #ee5353;
-    width: 80%;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Center the content vertically inside the big box */
-    text-align: center; /* Center the content horizontally inside the big box */
-    transition: box-shadow 0.5s ease-in-out; /* Add a smooth transition for the box shadow */
-    flex-wrap: wrap; /* Allow items to wrap to the next line if there's not enough space */
-}
+        .big-box li {
+            list-style: none;
+            padding: 10px;
+            border-radius: 5px;
+            width: 45%;
+            box-sizing: border-box;
+        }
 
-/* Styling for the list items */
-.big-box li {
-    list-style: none; /* Remove default list styling */
-    padding: 10px;
-    border-radius: 5px;
-    width: 45%; /* Make each list item take up 45% of the width */
-    box-sizing: border-box; /* Include padding and border in the width calculation */
-}
+        .big-box ul {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
 
-/* Additional styles to position the list items side by side */
-.big-box ul {
-    display: flex;
-    justify-content: space-between; /* Align items to the space between */
-    width: 100%;
-}
-
-/* Styling for smaller screens */
-@media (max-width: 768px) {
-    .big-box li {
-        width: 100%; /* Make each list item take up 100% of the width on smaller screens */
-    }
-}
-
-
+        @media (max-width: 768px) {
+            .big-box li {
+                width: 100%;
+            }
+        }
 
         /* Styling for the small images (buttons) */
         .button-images {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px; /* Add margin for better separation from the big box */
+            margin-top: 20px;
         }
 
         .button-images img {
@@ -109,34 +96,59 @@
             border: 3px solid #ee5353;
             border-radius: 5px;
             cursor: pointer;
-            transition: box-shadow 0.5s ease-in-out; /* Add a smooth transition for the box shadow */
+            transition: box-shadow 0.5s ease-in-out;
+        }
+
+        /* Styling for the result images */
+        #resultImages {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .result-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            margin-top: 10px;
+            transition: box-shadow 0.5s ease-in-out;
+            display: none;
+        }
+
+        .result-image.win-glow {
+            box-shadow: 0 0 10px 3px #4CAF50;
+        }
+
+        .result-image.lose-glow {
+            box-shadow: 0 0 10px 3px #f44336;
         }
 
         /* Styling for the "You" element */
         .user {
-            background-color: #4CAF50; /* Green background color */
-            color: white; /* White text color */
+            background-color: #4CAF50;
+            color: white;
             margin-right: 100px;
         }
 
         /* Styling for the "Computer" element */
         .computer {
-            background-color: #f44336; /* Red background color */
-            color: white; /* White text color */
+            background-color: #f44336;
+            color: white;
             margin-right: 100px;
         }
 
         /* Styling for the glowing effect */
         .win-glow {
-            box-shadow: 0 0 20px 5px #4CAF50; /* Green glow for the "You" box */
+            box-shadow: 0 0 20px 5px #4CAF50;
         }
 
         .lose-glow {
-            box-shadow: 0 0 20px 5px #f44336; /* Red glow for the "Computer" box */
+            box-shadow: 0 0 20px 5px #f44336;
         }
 
         .image-glow {
-            box-shadow: 0 0 10px 3px #5358ee; /* Glow for the selected image */
+            box-shadow: 0 0 10px 3px #5358ee;
         }
 
         /* Media query for smaller screens */
@@ -144,17 +156,18 @@
             .big-box {
                 width: 80%;
                 height: 160px;
-                flex-direction: column; /* Stack items vertically on smaller screens */
+                flex-direction: column;
             }
 
             .big-box li {
-                width: 100%; /* Make each list item take up 100% of the width on smaller screens */
+                width: 100%;
             }
         }
     </style>
 </head>
+
 <body>
-   
+    <!-- Navigation bar -->
     <nav>
         <a href="#home">Home</a>
         <a href="#about">About</a>
@@ -162,12 +175,29 @@
         <a href="#contact">Contact</a>
     </nav>
 
+    <!-- Overall result display -->
+    <div id="overallresult" style="text-align: center; font-size: 40px; font-weight: bold; margin-top: 20px; color: #1a5fc8;">result</div>
+
+    <!-- Main container for the game -->
     <div class="container">
+        <!-- Big box for displaying results -->
         <div id="rectangle" class="big-box">
             <ul>
-                <li class="computer">Computer</li>
-                <li class="user">You</li>
+                <li class="computer">
+                    Computer
+                    <p>Score: <span id="compScore">0</span></p>
+                </li>
+                <li class="user">
+                    You
+                    <p>Score: <span id="userScore">0</span></p>
+                </li>
             </ul>
+        </div>
+
+        <!-- Result images -->
+        <div id="resultImages">
+            <img id="successImage" src="success.png" alt="Success Image" class="result-image">
+            <img id="failureImage" src="crying.png" alt="Failure Image" class="result-image">
         </div>
 
         <!-- Images as buttons at the bottom of the big box -->
@@ -176,79 +206,141 @@
             <img id="scissor" src="icons8-hand-scissors-94.png" alt="scissor">
             <img id="rock" src="icons8-raised-fist-48.png" alt="rock">
         </div>
+
+        <!-- Element to display scores and chances -->
+        <div id="scoreChances">
+            <p>Chances left: <span id="chances">10</span></p>
+        </div>
     </div>
 
-<script>
-    const arr = ["rock", "paper", "scissor"];
-   
-    let resultMessage;
+    <!-- JavaScript script for game logic -->
+    <script>
+        // Array of possible choices for the game
+        const arr = ["rock", "paper", "scissor"];
+        // Variables to track scores and chances
+        let you = 0; // your score
+        let comp = 0; // computer score
+        let count = 10; // total chances
 
-    document.getElementById('img').addEventListener('click', function(event) {
-        // Remove glowing effect from all images
-        document.querySelectorAll('.button-images img').forEach(img => {
-            img.classList.remove('image-glow');
+        // Event listener for button clicks
+        document.getElementById('img').addEventListener('click', function (event) {
+            // Check if chances are remaining
+            if (count > 0) {
+                // Remove glowing effect from all images
+                document.querySelectorAll('.button-images img').forEach(img => {
+                    img.classList.remove('image-glow');
+                });
+
+                // Get the id of the clicked image
+                var id = event.target.id;
+                var userChoice;
+
+                // Map the id to the user's choice
+                if (id === 'paper') {
+                    userChoice = 'paper';
+                } else if (id === 'scissor') {
+                    userChoice = 'scissor';
+                } else if (id === 'rock') {
+                    userChoice = 'rock';
+                }
+
+                // Generate a random choice for the computer
+                const randomIndex = Math.floor(Math.random() * arr.length);
+                const randomElement = arr[randomIndex];
+
+                // Apply glowing effect to the selected image
+                event.target.classList.add('image-glow');
+
+                // Inside the click event listener
+                document.getElementById('successImage').style.display = 'none';
+                document.getElementById('failureImage').style.display = 'none';
+
+                // Declare resultMessage variable within the click event listener
+                let resultMessage;
+
+                // Determine the winner based on choices
+                if (randomElement === 'rock' && userChoice === 'paper' ||
+                    randomElement === 'paper' && userChoice === 'scissor' ||
+                    randomElement === 'scissor' && userChoice === 'rock') {
+                    // You won
+                    you++;
+                    resultMessage = 'You won!';
+                    document.getElementById('rectangle').classList.add('win-glow');
+                    document.getElementById('successImage').style.display = 'block';
+                    document.getElementById('failureImage').style.display = 'none';
+                } else {
+                    // You lost
+                    comp++;
+                    resultMessage = 'You lost!';
+                    document.getElementById('rectangle').classList.add('lose-glow');
+                    document.getElementById('successImage').style.display = 'none';
+                    document.getElementById('failureImage').style.display = 'block';
+                }
+
+                // Update scores and chances
+                document.getElementById('userScore').textContent = you;
+                document.getElementById('compScore').textContent = comp;
+                document.getElementById('chances').textContent = --count;
+
+                // Update the content inside the big box
+                document.getElementById('rectangle').innerHTML = `
+                    <ul>
+                        <li class="computer">
+                            Computer
+                            <p>Score: <span id="compScore">${comp}</span></p>
+                        </li>
+                        <li class="user">
+                            You
+                            <p>Score: <span id="userScore">${you}</span></p>
+                        </li>
+                    </ul>
+                `;
+
+                // Add classes to style user and computer differently
+                if (userChoice) {
+                    document.querySelector('.user').classList.add('user-selected');
+                }
+
+                if (randomElement) {
+                    document.querySelector('.computer').classList.add('computer-selected');
+                }
+
+                // Remove the glowing effect after 1 second
+                setTimeout(() => {
+                    document.getElementById('rectangle').classList.remove('win-glow', 'lose-glow');
+                }, 1000);
+                // Remove the emoji after 2 second
+                setTimeout(() => {
+                    document.getElementById('successImage').style.display = 'none';
+                    document.getElementById('failureImage').style.display = 'none';        
+                }, 1500);
+
+                // Remove the glowing effect from the selected image after 1 second
+                setTimeout(() => {
+                    event.target.classList.remove('image-glow');
+                }, 1000);
+
+                // Check if chances are exhausted
+                if (count === 0) {
+                    // Determine the winner
+                    let winnerMessage = '';
+                    if (you > comp) {
+                        winnerMessage = 'You won the match!';
+                    } else if (comp > you) {
+                        winnerMessage = 'Computer won the match!';
+                    } else {
+                        winnerMessage = 'It\'s a draw!';
+
+                    }
+
+                    // Display the winner message
+                    setTimeout(() => {
+                        document.getElementById('overallresult').innerHTML = `${winnerMessage}`;
+                    }, 1000);
+                }
+            }
         });
-
-        var id = event.target.id;
-        var userChoice;
-
-        if (id === 'paper') {
-            userChoice = 'paper';
-        } else if (id === 'scissor') {
-            userChoice = 'scissor';
-        } else if (id === 'rock') {
-            userChoice = 'rock';
-        }
-
-        const randomIndex = Math.floor(Math.random() * arr.length);
-        const randomElement = arr[randomIndex];
-
-        // Apply glowing effect to the selected image
-        event.target.classList.add('image-glow');
-
-        if (randomElement === 'rock' && userChoice === 'paper') {
-            resultMessage = 'You won!';
-            document.getElementById('rectangle').classList.add('win-glow');
-        } else if (randomElement === 'paper' && userChoice === 'scissor') {
-            resultMessage = 'You won!';
-            document.getElementById('rectangle').classList.add('win-glow');
-        } else if (randomElement === 'scissor' && userChoice === 'rock') {
-            resultMessage = 'You won!';
-            document.getElementById('rectangle').classList.add('win-glow');
-        } else {
-            resultMessage = 'You lost!';
-            document.getElementById('rectangle').classList.add('lose-glow');
-        }
-
-        // Update the content inside the big box
-        document.getElementById('rectangle').innerHTML = `
-            <ul>
-                <li class="computer">${resultMessage}</li>
-                <li class="user">You</li>
-            </ul>
-        `;
-
-        // Add classes to style user and computer differently
-        if (userChoice) {
-            document.querySelector('.user').classList.add('user-selected');
-        }
-
-        if (randomElement) {
-            document.querySelector('.computer').classList.add('computer-selected');
-        }
-
-        // Remove the glowing effect after 1 second
-        setTimeout(() => {
-            document.getElementById('rectangle').classList.remove('win-glow', 'lose-glow');
-        }, 1000);
-
-        // Remove the glowing effect from the selected image after 1 second
-        setTimeout(() => {
-            event.target.classList.remove('image-glow');
-        }, 1000);
-    });
-</script>
-
-
+    </script>
 </body>
+
 </html>
