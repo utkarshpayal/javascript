@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper & Scissor</title>
-</head>
-    
-<style>
-nav {
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        nav {
             background-color: #333;
             overflow: hidden;
         }
@@ -19,7 +22,6 @@ nav {
             text-align: center;
             padding: 20px 40px;
             text-decoration: none;
-            
         }
 
         /* Style the links on hover */
@@ -28,22 +30,129 @@ nav {
             color: black;
         }
 
- /* Basic styling for the box */
- .box {
-            width: 500px;
-            height: 700px;
-            border: 6px solid #ee5353;
-            margin: 10% auto; /* Use auto for vertical margin to center the box */
+        /* Basic styling for the main container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Ensure the container covers the entire viewport height */
             padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Styling for the big box */
+        .big-box {
+            border: 6px solid #ee5353;
+            width: 80%;
+            height: 160px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Center the content vertically inside the big box */
+            text-align: center; /* Center the content horizontally inside the big box */
+            transition: box-shadow 0.5s ease-in-out; /* Add a smooth transition for the box shadow */
+        }
+
+        /* Styling for the big box */
+.big-box {
+    border: 6px solid #ee5353;
+    width: 80%;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center the content vertically inside the big box */
+    text-align: center; /* Center the content horizontally inside the big box */
+    transition: box-shadow 0.5s ease-in-out; /* Add a smooth transition for the box shadow */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if there's not enough space */
+}
+
+/* Styling for the list items */
+.big-box li {
+    list-style: none; /* Remove default list styling */
+    padding: 10px;
+    border-radius: 5px;
+    width: 45%; /* Make each list item take up 45% of the width */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+/* Additional styles to position the list items side by side */
+.big-box ul {
+    display: flex;
+    justify-content: space-between; /* Align items to the space between */
+    width: 100%;
+}
+
+/* Styling for smaller screens */
+@media (max-width: 768px) {
+    .big-box li {
+        width: 100%; /* Make each list item take up 100% of the width on smaller screens */
+    }
+}
+
+
+
+        /* Styling for the small images (buttons) */
+        .button-images {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px; /* Add margin for better separation from the big box */
+        }
+
+        .button-images img {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #ee5353;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: box-shadow 0.5s ease-in-out; /* Add a smooth transition for the box shadow */
+        }
+
+        /* Styling for the "You" element */
+        .user {
+            background-color: #4CAF50; /* Green background color */
+            color: white; /* White text color */
+            margin-right: 100px;
+        }
+
+        /* Styling for the "Computer" element */
+        .computer {
+            background-color: #f44336; /* Red background color */
+            color: white; /* White text color */
+            margin-right: 100px;
+        }
+
+        /* Styling for the glowing effect */
+        .win-glow {
+            box-shadow: 0 0 20px 5px #4CAF50; /* Green glow for the "You" box */
+        }
+
+        .lose-glow {
+            box-shadow: 0 0 20px 5px #f44336; /* Red glow for the "Computer" box */
+        }
+
+        .image-glow {
+            box-shadow: 0 0 10px 3px #5358ee; /* Glow for the selected image */
         }
 
         /* Media query for smaller screens */
         @media (max-width: 768px) {
-            .box {
-                width: 90%; /* Adjust the width for smaller screens */
+            .big-box {
+                width: 80%;
+                height: 160px;
+                flex-direction: column; /* Stack items vertically on smaller screens */
+            }
+
+            .big-box li {
+                width: 100%; /* Make each list item take up 100% of the width on smaller screens */
             }
         }
-</style>
+    </style>
+</head>
 <body>
    
     <nav>
@@ -52,8 +161,93 @@ nav {
         <a href="#services">Services</a>
         <a href="#contact">Contact</a>
     </nav>
-     <div class="box">
 
+    <div class="container">
+        <div id="rectangle" class="big-box">
+            <ul>
+                <li class="computer">Computer</li>
+                <li class="user">You</li>
+            </ul>
+        </div>
+
+        <!-- Images as buttons at the bottom of the big box -->
+        <div id="img" class="button-images">
+            <img id="paper" src="icons8-hand-94.png" alt="paper">
+            <img id="scissor" src="icons8-hand-scissors-94.png" alt="scissor">
+            <img id="rock" src="icons8-raised-fist-48.png" alt="rock">
+        </div>
     </div>
+
+<script>
+    const arr = ["rock", "paper", "scissor"];
+   
+    let resultMessage;
+
+    document.getElementById('img').addEventListener('click', function(event) {
+        // Remove glowing effect from all images
+        document.querySelectorAll('.button-images img').forEach(img => {
+            img.classList.remove('image-glow');
+        });
+
+        var id = event.target.id;
+        var userChoice;
+
+        if (id === 'paper') {
+            userChoice = 'paper';
+        } else if (id === 'scissor') {
+            userChoice = 'scissor';
+        } else if (id === 'rock') {
+            userChoice = 'rock';
+        }
+
+        const randomIndex = Math.floor(Math.random() * arr.length);
+        const randomElement = arr[randomIndex];
+
+        // Apply glowing effect to the selected image
+        event.target.classList.add('image-glow');
+
+        if (randomElement === 'rock' && userChoice === 'paper') {
+            resultMessage = 'You won!';
+            document.getElementById('rectangle').classList.add('win-glow');
+        } else if (randomElement === 'paper' && userChoice === 'scissor') {
+            resultMessage = 'You won!';
+            document.getElementById('rectangle').classList.add('win-glow');
+        } else if (randomElement === 'scissor' && userChoice === 'rock') {
+            resultMessage = 'You won!';
+            document.getElementById('rectangle').classList.add('win-glow');
+        } else {
+            resultMessage = 'You lost!';
+            document.getElementById('rectangle').classList.add('lose-glow');
+        }
+
+        // Update the content inside the big box
+        document.getElementById('rectangle').innerHTML = `
+            <ul>
+                <li class="computer">${resultMessage}</li>
+                <li class="user">You</li>
+            </ul>
+        `;
+
+        // Add classes to style user and computer differently
+        if (userChoice) {
+            document.querySelector('.user').classList.add('user-selected');
+        }
+
+        if (randomElement) {
+            document.querySelector('.computer').classList.add('computer-selected');
+        }
+
+        // Remove the glowing effect after 1 second
+        setTimeout(() => {
+            document.getElementById('rectangle').classList.remove('win-glow', 'lose-glow');
+        }, 1000);
+
+        // Remove the glowing effect from the selected image after 1 second
+        setTimeout(() => {
+            event.target.classList.remove('image-glow');
+        }, 1000);
+    });
+</script>
+
 </body>
 </html>
